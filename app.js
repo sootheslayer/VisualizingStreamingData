@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 var zkserver = 'localhost:2181';
 var kafka_client_id = 'socket.io-kafka';
 var kafkaClient = new kafka.Client(zkserver,kafka_client_id);
-var consumer = new kafka.Consumer(kafkaClient,[{topic: 'test'}],{autoCommit: true});
+var consumer = new kafka.Consumer(kafkaClient,[{ topic: 'add' },{ topic: 'sub' }],{autoCommit: true});
 // var topics = ['test'];
 
 // Sending data to client
@@ -26,5 +26,7 @@ io.on('connection', function (socket) {
 });
 
 consumer.on('message', function (message) {
-  io.emit('kafka-handshake', message);
+	// console.log(message.topic,message.value);
+	var str = message.topic;
+	io.emit(str, message);
 });
