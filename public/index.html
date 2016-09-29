@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSockets Test</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+          
+</head>
+<body>
+    <div class="row">
+        <div class="col s12 m4">
+          <div class="card blue darken-1 darken-1">
+            <div class="card-content white-text">
+              <span id="avgTimeTitle" class="center-align card-title">Value</span>
+              <p id="avgTimeNum" class="center-align" ></p>
+            </div>
+          </div>
+        </div>
+    <script src="bower_components/jquery/dist/jquery.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/main.js"></script>
+</body>
+</html>
