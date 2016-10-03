@@ -21,9 +21,9 @@
   "author": "Himanshu Chowdhary",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/enigmanshu/VisualizingStreamingData/issues"
+    "url": "https://github.com/hchowdhary/VisualizingStreamingData/issues"
   },
-  "homepage": "https://github.com/enigmanshu/VisualizingStreamingData#readme",
+  "homepage": "https://github.com/hchowdhary/VisualizingStreamingData#readme",
   "dependencies": {
     "bower": "^1.7.9",
     "express": "^4.14.0",
