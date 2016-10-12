@@ -115,6 +115,4 @@ function updateTimeSeriesLineChart(data) {
 		.ease("linear")
 		.call(y)
 
-	// svg.select("path")
-	// 	.
 }

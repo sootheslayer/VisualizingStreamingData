@@ -5,6 +5,7 @@
     <title>Clickstream Analytics Dashboard</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="bower_components/materialize/bin/materialize.css">
+    <link rel="stylesheet" type="text/css" href="/css/epoch.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
           
 </head>
@@ -24,13 +25,24 @@
 
   <div id="kpi"></div>
   <div id="maps"></div>
-  <div id="graphs"></div>
+  <div id="graphs">
+    <div id="row">
+      <div class="col m6 l12">
+        
+      </div>
+    </div>
+  </div>
+  <div id="lineChart1" class="epoch category10" style="width: 900px; height: 200px;"></div>
+  <div id="lineChart2" class="epoch category10" style="width: 900px; height: 200px;"></div>
   <script src="bower_components/jquery/dist/jquery.min.js" ></script>
   <script src="bower_components/materialize/bin/materialize.js"></script>
-  <script src="bower_components/d3/d3.min.js"></script>
+  <!-- <script src="bower_components/d3/d3.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
   <script src="https://d3js.org/d3-random.v1.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/javascripts/visualization.js"></script>
+  <!-- <script src="/javascripts/visualization.js"></script> -->
+  <script src="/javascripts/epoch.js"></script>
+  <script src="/javascripts/data.js"></script>
   <script src="/javascripts/main.js"></script>
 </body>
 </html>
