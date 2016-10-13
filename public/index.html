@@ -11,7 +11,7 @@
 </head>
 <body>
   <!-- <div class="navbar-fixed">
-    <nav class="light-blue">
+    <nav class="blue darken-2">
       <div class="nav-wrapper container">
         <a href="#!" class="brand-logo">Clickstream Analytics</a>
         <ul class="right hide-on-med-and-down">
@@ -26,14 +26,67 @@
   <div id="kpi"></div>
   <div id="maps"></div>
   <div id="graphs">
-    <div id="row">
-      <div class="col m6 l12">
-        
+    <div class="row">
+      <div class="col m6">
+        <div class="card small">
+          <div class="card-content">
+            <span class="card-title">Bounce Rate</span>
+            <div id="bounceRate" class="epoch category10" style="height: 220px;" ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col m6">
+        <div class="card small">
+          <div class="card-content">
+            <span class="card-title">Avg. Time Spent</span>
+            <div id="avgTimeSpent" class="epoch category10" style="height: 220px;" ></div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col m6">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"> Conversion Rate:
+            </span>
+            <span class="card-title" id="conversionRate" > - -
+            </span>
+          </div>
+        </div>
+        <div class="card small">
+          <div class="card-content">
+            <span class="card-title">No. of Visits by Insurance Type</span>
+            <div id="hitsByCategory" class="epoch category10" style="height: 220px;" ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col l3">
+        <div class="card medium">
+          <div class="card-content">
+            <span class="card-title">Top 10 Marketing Channels</span>
+            <div id="top10MarketingChannels"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col l3">
+        <div class="card medium">
+          <div class="card-content">
+            <span class="card-title">Top 10 bounce rate pages</span>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div id="lineChart1" class="epoch category10" style="width: 900px; height: 200px;"></div>
-  <div id="lineChart2" class="epoch category10" style="width: 900px; height: 200px;"></div>
+            
+ <!--  <div id="lineChart1" class="epoch category10" style="width: 900px; height: 200px;"></div> -->
+  <!-- <div id="lineChart2" class="epoch category10" style="width: 900px; height: 200px;"></div> -->
   <script src="bower_components/jquery/dist/jquery.min.js" ></script>
   <script src="bower_components/materialize/bin/materialize.js"></script>
   <!-- <script src="bower_components/d3/d3.min.js"></script> -->
@@ -42,7 +95,6 @@
   <script src="/socket.io/socket.io.js"></script>
   <!-- <script src="/javascripts/visualization.js"></script> -->
   <script src="/javascripts/epoch.js"></script>
-  <script src="/javascripts/data.js"></script>
   <script src="/javascripts/main.js"></script>
 </body>
 </html>

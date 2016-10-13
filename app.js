@@ -26,9 +26,9 @@ io.on('connection', function (socket) {
 });
 
 consumer.on('message', function (message) {
-	var msg = [{time: Date.now(), y: Number(message.value)}];
+	// var msg = [{time: Date.now(), y: Number(message.value)}];
 	// console.log(message);
 	var str = message.topic;
-	io.emit(str, msg);
+	io.emit(str, message.value);
 	// console.log(msg);
 });
