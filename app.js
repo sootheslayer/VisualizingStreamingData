@@ -14,10 +14,11 @@ app.get('/', function (req, res) {
 });
 
 // Kafka Consumer Config
-var zkserver = 'localhost:2181'; //'DIN16000309:2181';
+var zkserver = 'DIN16000309:2181'; //'DIN16000309:2181';
 var kafka_client_id = 'socket.io-kafka';
 var kafkaClient = new kafka.Client(zkserver,kafka_client_id);
-var consumer = new kafka.Consumer(kafkaClient,[{ topic: 'bounceRate' }],{autoCommit: true});
+// var consumer = new kafka.Consumer(kafkaClient,[{ topic: 'bounceRate' },{ topic: 'averageTime' },{ topic: 'usersPerCategory' },{ topic: 'hitsByMarketingChannels' },{ topic: 'pagesByBounceRate' }],{autoCommit: true});
+var consumer = new kafka.Consumer(kafkaClient,[{ topic: 'usersPerCategory' }],{autoCommit: true});
 // var topics = ['test'];
 
 // Sending data to client
@@ -27,8 +28,7 @@ io.on('connection', function (socket) {
 
 consumer.on('message', function (message) {
 	// var msg = [{time: Date.now(), y: Number(message.value)}];
-	// console.log(message);
+	console.log(message.topic + " ->> " + message.value);
 	var str = message.topic;
 	io.emit(str, message.value);
-	// console.log(msg);
 });
