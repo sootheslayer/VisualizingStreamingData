@@ -1,208 +1,254 @@
 // Initialize websocket connection
 var socket = io.connect('http://localhost:3000');
 
+//Convert kafka messages arriving in tuples to arrays.
 var tupletoArray = function(tuple){
-	return tuple.split(",").map(function(x){
+	return tuple.split(", ").map(function(x){
 	var arr = x.substring(1,x.length-1).split(",");
  	return {label: arr[0], value: Number(arr[1])};
 });
 };
 
-//Socket.io event handlers
+// Create charts
+
+// Bounce Rate Chart
+
+var bounceRateLineChart;
+var bounceRateLineChartData = [
+    {
+      values: [],      //values - represents the array of {x,y} data points
+      key: 'Bounce Rate', //key  - the name of the series.
+      color: '#7cb342'  //color - optional: choose your own line color.
+    }
+    ];
+
+nv.addGraph(function(){
+    bounceRateLineChart = nv.models.lineChart()
+                  .margin({left: 50, right: 30})
+                  .useInteractiveGuideline(true)
+                  .showLegend(true)
+                  .showYAxis(true)
+                  .showXAxis(true);
+    bounceRateLineChart.xAxis
+            .axisLabel('Time')
+            .tickFormat(function(d){return d3.time.format('%H:%M:%S')(new Date(d));});
+
+    bounceRateLineChart.yAxis
+            .axisLabel('Bounce Rate')
+            .tickFormat(d3.format('.2f'));
+
+    
+    d3.select('#bounceRate')
+        .append('svg')
+        .datum(bounceRateLineChartData)
+        .transition().duration(500)
+        .call(bounceRateLineChart);
+
+    nv.utils.windowResize(function() { bounceRateLineChart.update() });
+    return bounceRateLineChart;
+});
+
+var avgTimeSpentLineChart;
+var avgTimeSpentLineChartData = [
+    {
+      values: [],      //values - represents the array of {x,y} data points
+      key: 'Average Time Spent', //key  - the name of the series.
+      color: '#ff7f0e'  //color - optional: choose your own line color.
+    }
+    ];
+
+nv.addGraph(function(){
+    avgTimeSpentLineChart = nv.models.lineChart()
+                  .margin({left: 50, right: 20})
+                  .useInteractiveGuideline(true)
+                  .showLegend(true);
+
+    avgTimeSpentLineChart.xAxis
+            .axisLabel('Time')
+            .tickFormat(function(d){return d3.time.format('%H:%M:%S')(new Date(d));});
+
+    avgTimeSpentLineChart.yAxis
+            .axisLabel('Avg. Time Spent (min)')
+            .tickFormat(d3.format('.2f'));
+
+    
+    d3.select('#avgTimeSpent')
+        .append('svg')
+        .datum(avgTimeSpentLineChartData)
+        .transition().duration(500)
+        .call(avgTimeSpentLineChart);
+
+    nv.utils.windowResize(function() { avgTimeSpentLineChart.update() });
+    return avgTimeSpentLineChart;
+});
+
+var hitsByCategoryBarChart;
+var hitsByCategoryBarChartData = [
+{
+	key: "Condo",
+	values: []
+},
+{
+	key: "Flood",
+	values: []
+},
+{
+	key: "Home Owner",
+	values: []
+},
+{
+	key: "Renters",
+	values: []
+},
+{
+	key: "Umbrella",
+	values: []
+},
+{
+	key: "Vehicle",
+	values: []
+}
+];
+
+nv.addGraph(function() {
+    hitsByCategoryBarChart = nv.models.stackedAreaChart()
+                  .margin({right: 100})
+                  .x(function(d) { return d[0] })   //We can modify the data accessor functions...
+                  .y(function(d) { return d[1] })   //...in case your data is formatted differently.
+                  .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
+                  .rightAlignYAxis(true)      //Let's move the y-axis to the right side.
+                  .showControls(true)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
+                  .clipEdge(true)
+                  .color(d3.scale.category20().range());
+
+    //Format x-axis labels with custom function.
+    hitsByCategoryBarChart.xAxis
+        .axisLabel('Time')
+        .tickFormat(function(d){return d3.time.format('%H:%M:%S')(new Date(d));});
+
+    hitsByCategoryBarChart.yAxis
+    	.axisLabel('No. of Visits')
+        .tickFormat(d3.format(',.2f'));
+
+    d3.select('#hitsByCategory')
+    	.append('svg')
+    	.datum(hitsByCategoryBarChartData)
+    	.transition().duration(500)
+    	.call(hitsByCategoryBarChart);
+
+    nv.utils.windowResize(hitsByCategoryBarChart.update);
+
+    return hitsByCategoryBarChart;
+  });
+
+var marketingChannelsBarChart;
+var marketingChannelsBarChartData = [
+{
+	key: "Marketing Channels",
+	values: []
+}];
+
+nv.addGraph(function() {
+    marketingChannelsBarChart = nv.models.multiBarHorizontalChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .margin({top: 20, right: 20, bottom: 20, left: 100})
+        .showControls(false)        //Allow user to switch between "Grouped" and "Stacked" mode.
+        .barColor(d3.scale.category20().range());
+
+    marketingChannelsBarChart.yAxis
+        .tickFormat(d3.format(',.2f'));
+
+    d3.select('#topMarketingChannels')
+    	.append('svg')
+        .datum(marketingChannelsBarChartData)
+        .transition().duration(500)
+        .call(marketingChannelsBarChart);
+
+    nv.utils.windowResize(marketingChannelsBarChart.update);
+
+    return marketingChannelsBarChart;
+  });
+
+var bounceRateBarChart;
+var bounceRateBarChartData = [
+{
+	key: "Top 10 BR Pages",
+	values: []
+}];
+
+nv.addGraph(function() {
+    bounceRateBarChart = nv.models.multiBarHorizontalChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .margin({top: 20, right: 20, bottom: 20, left: 1})
+        .showControls(false)        //Allow user to switch between "Grouped" and "Stacked" mode.
+        .barColor(d3.scale.category20().range());
+
+    bounceRateBarChart.yAxis
+        .tickFormat(d3.format(',.2f'));
+
+    d3.select('#top10BounceRatePages')
+    	.append('svg')
+        .datum(bounceRateBarChartData)
+        .transition().duration(500)
+        .call(bounceRateBarChart);
+
+    nv.utils.windowResize(bounceRateBarChart.update);
+
+    return bounceRateBarChart;
+  });
+
+//--------------------------------------Socket.io event handlers------------------------------------
 
 // Bounce Rate Chart
 socket.on('bounceRate', function (data) {
-	bounceRateLinceChart.push([{time: Date.now(), y: Number(data)}]);
+	bounceRateLineChartData[0].values.push({x: Date.now(), y: Number(data)});
+	if(bounceRateLineChartData[0].values.length > 30) {
+		bounceRateLineChartData[0].values.shift();
+	}
+	bounceRateLineChart.update();
 });
 
 //Avg. Time spent line chart
 socket.on('averageTime', function (data) {
-	avgTimeSpentLineChart.push([{time: Date.now(), y: Number(data)}]);
+	avgTimeSpentLineChartData[0].values.push({x: Date.now(), y: Number(data)});
+	if(avgTimeSpentLineChartData[0].values.length > 30) {
+		avgTimeSpentLineChartData[0].values.shift();
+	}
+	avgTimeSpentLineChart.update();
 });
 
-// var collectedValue = [];
-// var i = 0;
 //Stacked bar chart of time spent by insurance type 
 socket.on('usersPerCategory',function(data){
 	var arr = tupletoArray(data);
-	console.log(arr);
-	hitsByCategoryBarChart.push([
-		{time: Date.now(), y: Number(arr[0].value)},
-		{time: Date.now(), y: Number(arr[1].value)},
-		{time: Date.now(), y: Number(arr[2].value)},
-		{time: Date.now(), y: Number(arr[3].value)},
-		{time: Date.now(), y: Number(arr[4].value)},
-		{time: Date.now(), y: Number(arr[5].value)}
-		]);
-});
-
-// conversion rate KPI
-socket.on('conversionRate', function(data){
-	$('conversionRate').text(data);
+	hitsByCategoryBarChartData[0].values.push([ Date.now(), Number(arr[0].value)]);
+	hitsByCategoryBarChartData[1].values.push([ Date.now(), Number(arr[1].value)]);
+	hitsByCategoryBarChartData[2].values.push([ Date.now(), Number(arr[2].value)]);
+	hitsByCategoryBarChartData[3].values.push([ Date.now(), Number(arr[3].value)]);
+	hitsByCategoryBarChartData[4].values.push([ Date.now(), Number(arr[4].value)]);
+	hitsByCategoryBarChartData[5].values.push([ Date.now(), Number(arr[5].value)]);
+	if(hitsByCategoryBarChartData[0].values.length > 30) {
+		hitsByCategoryBarChartData[0].values.shift();
+		hitsByCategoryBarChartData[1].values.shift();
+		hitsByCategoryBarChartData[2].values.shift();
+		hitsByCategoryBarChartData[3].values.shift();
+		hitsByCategoryBarChartData[4].values.shift();
+		hitsByCategoryBarChartData[5].values.shift();
+	}
+	// console.log('error before update');
+	hitsByCategoryBarChart.update();
 });
 
 // top 10 marketing channels
 socket.on('hitsByMarketingChannels', function(data){
-	var arr = tupletoArray(data);
-	marketingChannelsBarChart(arr);
+	marketingChannelsBarChartData[0].values = tupletoArray(data);
+	marketingChannelsBarChart.update();
 });
 
 // top 10 bounce rate pages
-socket.on('top10BounceRate',function(data){
-
+socket.on('pagesByBounceRate',function(data){
+	bounceRateBarChartData[0].values = tupletoArray(data);
+	bounceRateBarChart.update();
 });
-
-// Create charts
-// var arrTest = [{time:1476272058,y:68},
-// 			{time:1476272058,y:69},
-// 			{time:1476272058,y:62},
-// 			{time:1476272058,y:59},
-// 			{time:1476272058,y:88},
-// 			{time:1476272058,y:48},
-// 			{time:1476272058,y:22},
-// 			{time:1476272058,y:88},
-// 			{time:1476272058,y:36},
-// 			{time:1476272058,y:69}];
-
-var bounceRateData = [{
-	label: "test1",
-	values: []
-}];
-
-var bounceRateLinceChart = $('#bounceRate').epoch({
-	type: 'time.line',
-	data: bounceRateData,
-	axes: ['bottom', 'left']
-});
-
-var avgTimeSpentData = [{
-	label: "test1",
-	values: []
-}];
-
-var avgTimeSpentLineChart = $('#avgTimeSpent').epoch({
-	type: 'time.line',
-	data: avgTimeSpentData,
-	axes: ['bottom', 'left']
-});
-
-var hitsByCategoryData = [
-{
-	label: "Vehicle Insurance",
-	values: []
-},
-{
-	label: "Home Owner Insurance",
-	values: []
-},
-{
-	label: "Condo Insurance",
-	values: []
-},
-{
-	label: "Renters Insurance",
-	values: []
-},
-{
-	label: "Flood Insurance",
-	values: []
-},
-{
-	label: "Umbrella Insurance",
-	values: []
-},
-];
-
-var hitsByCategoryBarChart = $('#hitsByCategory').epoch({
-	type: 'time.bar',
-	data: hitsByCategoryData,
-	axes: ['bottom', 'left']
-});
-
-var marketingChannelsBarChart = function(data){
-	var width = parseInt(d3.select('#top10MarketingChannels').style('width'), 10);
-	var height = 300;//parseInt(d3.select('#top10MarketingChannels').style('height'), 10);
-	var barHeight = height/data.length;
-
-	var x = d3.scale.linear()
-    .domain([0, d3.max(data, function(d){ return d.value;})])
-    .range([0, width]);
-
-    var colorScale = d3.scale.linear()
-    .domain([0, d3.max(data, function(d){ return d.value;})])
-    .range(['#80cbc4', '#00695c']);
-
-    d3.select("#top10MarketingChannels")
-    .selectAll('svg')
-    .remove();
-
-	var chart = d3.select("#top10MarketingChannels")
-		.append('svg')
-		.attr('class', "chart")
-	    .attr("width", width)
-	    .attr("height", height);
-
-	var bar = chart.selectAll("g")
-	    .data(data)
-	  .enter().append("g")
-	    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-
-	bar.append("rect")
-	    .attr("width", function(d){return x(d.value);})
-	    .attr("height", barHeight - 1)
-	    .attr("fill", function(d){return colorScale(d.value);})
-	    ;
-
-	bar.append("text")
-	    .attr("x", function(d) { return x(d.value) - 3; })
-	    .attr("y", barHeight / 2)
-	    .attr("dy", ".35em")
-	    .text(function(d) { return d.label; });
-};
-
-
-// marketingChannelsBarChart(testData);
-
-var bounceRateBarChart = function(data){
-	var width = parseInt(d3.select('#top10BounceRatePages').style('width'), 10);
-	var height = 300;//parseInt(d3.select('#top10BounceRatePages').style('height'), 10);
-	var barHeight = height/data.length;
-
-	var x = d3.scale.linear()
-    .domain([0, d3.max(data, function(d){ return d.value;})])
-    .range([0, width]);
-
-    var colorScale = d3.scale.linear()
-    .domain([0, d3.max(data, function(d){ return d.value;})])
-    .range(['#ffcc80', '#ef6c00']);
-
-    d3.select("#top10BounceRatePages")
-    .selectAll('svg')
-    .remove();
-
-	var chart = d3.select("#top10BounceRatePages")
-		.append('svg')
-		.attr('class', "chart")
-	    .attr("width", width)
-	    .attr("height", height);
-
-	var bar = chart.selectAll("g")
-	    .data(data)
-	  .enter().append("g")
-	    .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-
-	bar.append("rect")
-	    .attr("width", function(d){return x(d.value);})
-	    .attr("height", barHeight - 1)
-	    .attr("fill", function(d){return colorScale(d.value);})
-	    ;
-
-	bar.append("text")
-	    .attr("x", function(d) { return x(d.value) - 3; })
-	    .attr("y", barHeight / 2)
-	    .attr("dy", ".35em")
-	    .text(function(d) { return d.label; });
-};
-
-// bounceRateBarChart(testData);
 
