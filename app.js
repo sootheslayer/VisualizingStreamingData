@@ -14,18 +14,18 @@ app.get('/', function (req, res) {
 });
 
 // Kafka Consumer Config
-var zkserver = 'DIN16000309:2181'; //'DIN16000309:2181';
+var zkserver = 'localhost:2181'; // Kafka Server Address
 var kafka_client_id = 'socket.io-kafka';
 var kafkaClient = new kafka.Client(zkserver,kafka_client_id);
 var consumer = new kafka.Consumer(kafkaClient,[{ topic: 'bounceRate' },{ topic: 'averageTime' },{ topic: 'usersPerCategory' },{ topic: 'hitsByMarketingChannels' },{ topic: 'pagesByBounceRate' }],{autoCommit: true});
 
-// Sending data to client
+// Define action to take when a websocket connection is established
 io.on('connection', function (socket) {
-	console.log("A client just connected.");
+	console.log("A client just connected."); 
 });
 
+// Kafka consumer action definitions
 consumer.on('message', function (message) {
 	// console.log(message.topic + " ->> " + message.value);
-	var str = message.topic;
-	io.emit(str, message.value);
+	io.emit(message.topic, message.value); // Reading Kafka topic value and Kafka message
 });

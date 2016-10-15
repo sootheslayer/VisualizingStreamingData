@@ -11,9 +11,9 @@ var tupletoArray = function(tuple){
 
 // Create charts
 
-// Bounce Rate Chart
+// Bounce Rate Line Chart
 
-var bounceRateLineChart;
+var bounceRateLineChart; 
 var bounceRateLineChartData = [
     {
       values: [],      //values - represents the array of {x,y} data points
@@ -29,6 +29,7 @@ nv.addGraph(function(){
                   .showLegend(true)
                   .showYAxis(true)
                   .showXAxis(true);
+
     bounceRateLineChart.xAxis
             .axisLabel('Time')
             .tickFormat(function(d){return d3.time.format('%H:%M:%S')(new Date(d));});
@@ -37,17 +38,17 @@ nv.addGraph(function(){
             .axisLabel('Bounce Rate')
             .tickFormat(d3.format('.2f'));
 
-    
     d3.select('#bounceRate')
         .append('svg')
         .datum(bounceRateLineChartData)
         .transition().duration(500)
         .call(bounceRateLineChart);
 
-    nv.utils.windowResize(function() { bounceRateLineChart.update() });
+    nv.utils.windowResize(function() { bounceRateLineChart.update(); });
     return bounceRateLineChart;
 });
 
+// Average Time spent on domain line chart
 var avgTimeSpentLineChart;
 var avgTimeSpentLineChartData = [
     {
@@ -78,10 +79,11 @@ nv.addGraph(function(){
         .transition().duration(500)
         .call(avgTimeSpentLineChart);
 
-    nv.utils.windowResize(function() { avgTimeSpentLineChart.update() });
+    nv.utils.windowResize(function() { avgTimeSpentLineChart.update(); });
     return avgTimeSpentLineChart;
 });
 
+// Visits by product category stacked area chart
 var hitsByCategoryBarChart;
 var hitsByCategoryBarChartData = [
 {
@@ -113,8 +115,8 @@ var hitsByCategoryBarChartData = [
 nv.addGraph(function() {
     hitsByCategoryBarChart = nv.models.stackedAreaChart()
                   .margin({right: 100})
-                  .x(function(d) { return d[0] })   //We can modify the data accessor functions...
-                  .y(function(d) { return d[1] })   //...in case your data is formatted differently.
+                  .x(function(d) { return d[0]; })   //We can modify the data accessor functions...
+                  .y(function(d) { return d[1]; })   //...in case your data is formatted differently.
                   .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
                   .rightAlignYAxis(true)      //Let's move the y-axis to the right side.
                   .showControls(true)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
@@ -141,6 +143,7 @@ nv.addGraph(function() {
     return hitsByCategoryBarChart;
   });
 
+// Marketing by channels horizontal bar chart
 var marketingChannelsBarChart;
 var marketingChannelsBarChartData = [
 {
@@ -150,8 +153,8 @@ var marketingChannelsBarChartData = [
 
 nv.addGraph(function() {
     marketingChannelsBarChart = nv.models.multiBarHorizontalChart()
-        .x(function(d) { return d.label })
-        .y(function(d) { return d.value })
+        .x(function(d) { return d.label; })
+        .y(function(d) { return d.value; })
         .margin({top: 20, right: 20, bottom: 20, left: 100})
         .showControls(false)        //Allow user to switch between "Grouped" and "Stacked" mode.
         .barColor(d3.scale.category20().range());
@@ -170,6 +173,7 @@ nv.addGraph(function() {
     return marketingChannelsBarChart;
   });
 
+// Top 10 Bounce rate pages horizontal bar chart
 var bounceRateBarChart;
 var bounceRateBarChartData = [
 {
