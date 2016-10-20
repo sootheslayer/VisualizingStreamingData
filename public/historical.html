@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Clickstream Analytics Dashboard</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="bower_components/materialize/bin/materialize.css">
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/nv.d3.css">
@@ -11,16 +12,17 @@
 <body>
 	<div id="graphs">
     <div class="row">
-      <div class="col m6 l12">
-        <div class="card large">
+      <div class="col m6 ">
+        <div class="card small">
           <div class="card-content">
             <span class="card-title">Summary of Users</span>
-            <div id="randomTest" style="height: 350px;" ></div>
-            <!-- <div id="randomTest" style="height: 320px;" ></div> -->
+            <a class="modal-trigger" href="#modal1">
+            	<i class="action-icons medium card-title material-icons right">launch</i>
+            </a>
+            <i id="refreshData" class="action-icons medium card-title material-icons right">loop</i>
+            <!-- <a id="refreshData" class="waves-effect waves-light btn blue">Fetch Data</a> -->
+            <div id="randomTest" style="height: 250px;" ></div>
           </div>
-          <div class="card-action">
-						<a id="refreshData" class="waves-effect waves-light btn blue">Fetch Data</a>
-					</div>
         </div>
       </div>
   	</div>

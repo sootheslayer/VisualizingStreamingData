@@ -61,11 +61,12 @@ var userSummaryChartData = [
 
 nv.addGraph(function() {
     userSummaryChart = nv.models.scatterChart()
+        .margin({right: 40})
         .showDistX(true)
         .showDistY(true)
         .showLabels(true)
         .useVoronoi(true)
-        .color(d3.scale.category10().range())
+        .color(d3.scale.category20().range())
         .duration(300)
         .clipEdge(true)
     ;
@@ -95,12 +96,16 @@ nv.addGraph(function() {
 
 $(document).ready(function(){
 
+	// modal plugin intialization
+	$('.modal-trigger').leanModal();
+
 	// Pull data out cassandra by button
 	$("#refreshData").click(function(){
 		var query = "SELECT * FROM test_purchase_summary limit 50;";
 		console.log('sending query to server: ' + query);
 		socket.emit('fetch-data', query);
 	});
+
 
 }); // Document ready function closing bracket
 
