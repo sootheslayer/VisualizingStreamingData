@@ -32,13 +32,13 @@ io.on('connection', function (socket) {
 	console.log("A client is connected.");
 
 	//fetch data from cassandra
-	socket.on('fetch-data',function(query){
+	socket.on('fetch-conversionSummaryChartData',function(query){
 		client.execute(query, function (err, result) {
 			if(err){
 				console.log(err);
 			}
 			console.log('executing query: ' + query);
-			io.emit('fetched-result', result.rows); // send data to client
+			io.emit('fetched-conversionSummaryChartData', result.rows); // send data to client
 		});
 	});
 });

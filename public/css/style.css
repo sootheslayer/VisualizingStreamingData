@@ -41,3 +41,8 @@ i.action-icons {
 a {
   color: #000000;
 }
+
+.modal {
+  max-height: 90%;
+  width: 90%;
+}

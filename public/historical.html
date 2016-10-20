@@ -15,29 +15,29 @@
       <div class="col m6 ">
         <div class="card small">
           <div class="card-content">
-            <span class="card-title">Summary of Users</span>
-            <a class="modal-trigger" href="#modal1">
-            	<i class="action-icons medium card-title material-icons right">launch</i>
+            <span class="card-title">Conversion Summary by Insurance</span>
+            <a class="modal-trigger" href="#conversionSummaryModal">
+            	<i id="launchConversionSummaryModal" class="action-icons medium card-title material-icons right">launch</i>
             </a>
-            <i id="refreshData" class="action-icons medium card-title material-icons right">loop</i>
+            <i id="refreshConversionSummaryData" class="action-icons medium card-title material-icons right">loop</i>
             <!-- <a id="refreshData" class="waves-effect waves-light btn blue">Fetch Data</a> -->
-            <div id="randomTest" style="height: 250px;" ></div>
+            <div id="conversionSummaryChart" style="height: 250px;" ></div>
           </div>
         </div>
       </div>
   	</div>
 	</div>
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+  <!-- Modals -->
+  <div id="conversionSummaryModal" class="modal">
     <div class="modal-content">
-    	<div id="randomTestModal" style="height: 450px;">
+    	<div id="conversionSummaryModalChart" style="height: 465px;">
 
     	</div>
     </div>
     <div class="modal-footer">
       <a class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-      <a id="refreshModal" class=" modal-action waves-effect waves-green btn-flat">Refresh</a>
+      <a id="refreshConversionSummaryModalChart" class=" modal-action waves-effect waves-green btn-flat">Refresh</a>
     </div>
   </div>
 
