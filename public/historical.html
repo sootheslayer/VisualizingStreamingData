@@ -20,20 +20,31 @@
             	<i id="launchConversionSummaryModal" class="action-icons medium card-title material-icons right">launch</i>
             </a>
             <i id="refreshConversionSummaryData" class="action-icons medium card-title material-icons right">loop</i>
-            <!-- <a id="refreshData" class="waves-effect waves-light btn blue">Fetch Data</a> -->
             <div id="conversionSummaryChart" style="height: 250px;" ></div>
           </div>
         </div>
       </div>
+
+      <div class="col m6 ">
+        <div class="card small">
+          <div class="card-content">
+            <span class="card-title">Geographical Distribution of Users</span>
+            <a class="modal-trigger" href="#userMapModal">
+            	<i id="launchUserMapModal" class="action-icons medium card-title material-icons right">launch</i>
+            </a>
+            <i id="refreshUserMapData" class="action-icons medium card-title material-icons right">loop</i>
+            <div id="userMapChart" style="height: 230px;" ></div>
+          </div>
+        </div>
+      </div>
+
   	</div>
 	</div>
 
   <!-- Modals -->
   <div id="conversionSummaryModal" class="modal">
     <div class="modal-content">
-    	<div id="conversionSummaryModalChart" style="height: 465px;">
-
-    	</div>
+    	<div id="conversionSummaryModalChart" style="height: 465px;"></div>
     </div>
     <div class="modal-footer">
       <a class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
@@ -46,6 +57,12 @@
 	<script src="bower_components/d3/d3.min.js"></script>
 	<script src="/javascripts/nv.d3.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<!-- Google Maps dependencies -->
+	<script src="/javascripts/markerclusterer.js"></script>
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvoD0gMPtCDkNs6noZtMVW-Gwifb0GV84&callback=initMap">
+  </script>
+  <!-- render charts dependency -->
 	<script src="/javascripts/fetchData.js"></script>
 </body>
 </html>
