@@ -7,30 +7,30 @@ var socket = io.connect('http://localhost:3000');
 var shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'];
 var conversionScatterChart;
 var conversionScatterChartData = [
-{
-	key: "Condo",
-	values: []
-},
-{
-	key: "vehicle",
-	values: []
-},
-{
-	key: "Home Owner",
-	values: []
-},
-{
-	key: "Umbrella",
-	values: []
-},
-{
-	key: "Renters",
-	values: []
-},
-{
-	key: "Flood",
-	values: []
-}
+	{
+		key: "Condo",
+		values: []
+	},
+	{
+		key: "Vehicle",
+		values: []
+	},
+	{
+		key: "Home Owner",
+		values: []
+	},
+	{
+		key: "Umbrella",
+		values: []
+	},
+	{
+		key: "Renters",
+		values: []
+	},
+	{
+		key: "Flood",
+		values: []
+	}
 ];
 nv.addGraph(function() {
     conversionScatterChart = nv.models.scatterChart()
@@ -107,38 +107,16 @@ nv.addGraph(function() {
 
 
 // User distribution on map
+var domID = 'userMapChart';
+var locations = [];
 function initMap() {
-  var map = new google.maps.Map(document.getElementById('userMapChart'), {
+
+  var map = new google.maps.Map(document.getElementById(domID), {
     zoom: 3,
-    center: {lat: -28.024, lng: 140.887},
+    center: {lat: 39.833﻿, lng: -98.583},
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
-  var locations = [
-    {lat: -31.563910, lng: 147.154312},
-    {lat: -33.718234, lng: 150.363181},
-    {lat: -33.727111, lng: 150.371124},
-    {lat: -33.848588, lng: 151.209834},
-    {lat: -33.851702, lng: 151.216968},
-    {lat: -34.671264, lng: 150.863657},
-    {lat: -35.304724, lng: 148.662905},
-    {lat: -36.817685, lng: 175.699196},
-    {lat: -36.828611, lng: 175.790222},
-    {lat: -37.750000, lng: 145.116667},
-    {lat: -37.759859, lng: 145.128708},
-    {lat: -37.765015, lng: 145.133858},
-    {lat: -37.770104, lng: 145.143299},
-    {lat: -37.773700, lng: 145.145187},
-    {lat: -37.774785, lng: 145.137978},
-    {lat: -37.819616, lng: 144.968119},
-    {lat: -38.330766, lng: 144.695692},
-    {lat: -39.927193, lng: 175.053218},
-    {lat: -41.330162, lng: 174.865694},
-    {lat: -42.734358, lng: 147.439506},
-    {lat: -42.734358, lng: 147.501315},
-    {lat: -42.735258, lng: 147.438000},
-    {lat: -43.999792, lng: 170.463352}
-  ]
   var markers = locations.map(function(location, i) {
     return new google.maps.Marker({
       position: location,
@@ -148,19 +126,141 @@ function initMap() {
 }
 
 
+// ECR stacked bar chart
+var ecrChart;
+var ecrChartData = [
+    {
+        key: 'Engagement',
+        values: [
+            {
+                "label" : "Vehicle" ,
+                "value" : -1.8746444827653
+            } ,
+            {
+                "label" : "Condo" ,
+                "value" : -8.0961543492239
+            } ,
+            {
+                "label" : "Home Owner" ,
+                "value" : -0.57072943117674
+            } ,
+            {
+                "label" : "Renters" ,
+                "value" : -2.4174010336624
+            } ,
+            {
+                "label" : "Flood" ,
+                "value" : -0.72009071426284
+            } ,
+            {
+                "label" : "Umbrella" ,
+                "value" : -2.77154485523777
+            }
+        ]
+    },
+    {
+        key: 'Conversion',
+        values: [
+            {
+                "label" : "Vehicle" ,
+                "value" : -1.8746444827653
+            } ,
+            {
+                "label" : "Condo" ,
+                "value" : -8.0961543492239
+            } ,
+            {
+                "label" : "Home Owner" ,
+                "value" : -0.57072943117674
+            } ,
+            {
+                "label" : "Renters" ,
+                "value" : -2.4174010336624
+            } ,
+            {
+                "label" : "Flood" ,
+                "value" : -0.72009071426284
+            } ,
+            {
+                "label" : "Umbrella" ,
+                "value" : -2.77154485523777
+            }
+        ]
+    },
+    {
+        key: 'Retention',
+        values: [
+            {
+                "label" : "Vehicle" ,
+                "value" : -1.8746444827653
+            } ,
+            {
+                "label" : "Condo" ,
+                "value" : -8.0961543492239
+            } ,
+            {
+                "label" : "Home Owner" ,
+                "value" : -0.57072943117674
+            } ,
+            {
+                "label" : "Renters" ,
+                "value" : -2.4174010336624
+            } ,
+            {
+                "label" : "Flood" ,
+                "value" : -0.72009071426284
+            } ,
+            {
+                "label" : "Umbrella" ,
+                "value" : -2.77154485523777
+            }
+        ]
+    }
+];
+
+nv.addGraph(function() {
+        ecrChart = nv.models.multiBarHorizontalChart()
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value })
+            // .yErr(function(d) { return [-Math.abs(d.value * Math.random() * 0.3), Math.abs(d.value * Math.random() * 0.3)] })
+            // .barColor(d3.scale.category20().range())
+            .duration(1050)
+            .margin({left: 100})
+            .stacked(true);
+
+        ecrChart.yAxis.tickFormat(d3.format(',.2f'));
+
+        ecrChart.yAxis.axisLabel('Y Axis');
+        ecrChart.xAxis.axisLabel('X Axis').axisLabelDistance(20);
+
+        d3.select('#ecrRatio')
+        		.append('svg')
+            .datum(ecrChartData)
+            .call(ecrChart);
+
+        nv.utils.windowResize(ecrChart.update);
+
+        ecrChart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+        ecrChart.state.dispatch.on('change', function(state){
+            nv.log('state', JSON.stringify(state));
+        });
+        return ecrChart;
+    });
+
 //------------------------------------- jQuery Definitions -----------------------------------
 
 $(document).ready(function(){
 
 	// modal plugin intialization
 	$('.modal-trigger').leanModal();
-
-	// Pull data out cassandra and update conversion summary chart small
+	
+// -----------------------------------Conversion Summary-------------------------------------
+	// Pull data and update conversion summary chart small
 	$("#refreshConversionSummaryData").click(function(){
 		updateConversionSummaryChart("SELECT * FROM test_purchase_summary limit 50;");
 	});
 
-	// Pull data out cassandra and update conversion summary modal chart
+	// Pull data and update conversion summary modal chart
 	$("#refreshConversionSummaryModalChart").click(function(){
 		updateConversionSummaryModalChart("SELECT * FROM test_purchase_summary limit 50;");
 	});
@@ -170,12 +270,33 @@ $(document).ready(function(){
 		updateConversionSummaryModalChart("SELECT * FROM test_purchase_summary limit 50;");
 	});
 
+//----------------------------------------User Maps-------------------------------------------
+	// Fetch location data for maps
+	$("#refreshUserMapData").click(function(){
+		updateUserMaps("SELECT latitude, longitude FROM log_table;");
+	});
+
+	// Launch modal for maps
+	$("#launchUserMapModal").click(function(){
+		domID = 'userMapsModalChart';
+		initMap();
+	});
+
+	// Fetch location data for maps modal
+	$("#refreshUserMapsModalChart").click(function(){
+		updateUserMaps("SELECT latitude, longitude FROM log_table;");
+	});
+
+	$("#close-user-map").click(function(){
+		domID = 'userMapChart';
+		initMap();
+	});
 }); // Document ready function closing bracket
 
 //----------------------------------------  CHART UPDATE FUCNTIONS ---------------------------------
 
 var updateConversionSummaryChart = function(query){
-		console.log('sending query to server: ' + query);
+		console.log('sending query toto update conversionSummaryChart server: ' + query);
 		socket.emit('fetch-conversionSummaryChartData', query);
 
 		socket.on('fetched-conversionSummaryChartData',function(data){
@@ -198,7 +319,7 @@ var updateConversionSummaryChart = function(query){
 };
 
 var updateConversionSummaryModalChart = function(query){
-		console.log('sending query to server: ' + query);
+		console.log('sending query to server to update conversionSummaryModalChart: ' + query);
 		socket.emit('fetch-conversionSummaryChartData', query);
 
 		socket.on('fetched-conversionSummaryChartData',function(data){
@@ -217,5 +338,18 @@ var updateConversionSummaryModalChart = function(query){
 			});
 		});
 		 conversionScatterModalChart.update();
+	});
+};
+
+var updateUserMaps = function(query){
+	console.log('sending query to server to update maps: ' + query);
+	socket.emit('fetch-latLong', query);
+
+	socket.on('fetched-latLongData',function(data){
+		locations = data.map(function(elem){
+			return { lat: Number(elem.latitude), lng: Number(elem.longitude)};
+		});
+
+		initMap();
 	});
 };

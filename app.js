@@ -31,7 +31,7 @@ var client = new cassandra.Client({contactPoints: ['DIN16000309'], keyspace: 'ra
 io.on('connection', function (socket) {
 	console.log("A client is connected.");
 
-	//fetch data from cassandra
+	//fetch conversion summary data from cassandra
 	socket.on('fetch-conversionSummaryChartData',function(query){
 		client.execute(query, function (err, result) {
 			if(err){
@@ -41,6 +41,15 @@ io.on('connection', function (socket) {
 			io.emit('fetched-conversionSummaryChartData', result.rows); // send data to client
 		});
 	});
+
+	socket.on('fetch-latLong', function(query){
+		client.execute(query, function(err, result){
+			if (err) { console.log(err)};
+			console.log('executing query: ' + query);
+			io.emit('fetched-latLongData', result.rows);
+		});
+	});
+
 });
 
 // Kafka consumer action definitions

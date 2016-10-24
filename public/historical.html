@@ -11,6 +11,7 @@
 </head>
 <body>
 	<div id="graphs">
+		<!-- *************************************** FIRST ROW ************************* -->
     <div class="row">
       <div class="col m6 ">
         <div class="card small">
@@ -39,6 +40,49 @@
       </div>
 
   	</div>
+  	<!-- ************************ SECOND ROW ************************** -->
+  	<div class="row">
+      <div class="col m5 ">
+        <div class="card medium">
+          <div class="card-content">
+            <span class="card-title">Engagement, Conversion, Retention</span>
+            <a class="modal-trigger" href="#ecrModal">
+            	<i id="launchEcrModal" class="action-icons medium card-title material-icons right">launch</i>
+            </a>
+            <i id="refreshEcrData" class="action-icons medium card-title material-icons right">loop</i>
+            <div id="ecrRatio" style="height: 330px;" ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col m4 ">
+        <div class="card medium">
+          <div class="card-content">
+            <span class="card-title">Bad Channels of Marketing</span>
+            <a class="modal-trigger" href="#badMarketingModal">
+            	<i id="launchBadMarketingModal" class="action-icons medium card-title material-icons right">launch</i>
+            </a>
+            <i id="refreshBadMarketingData" class="action-icons medium card-title material-icons right">loop</i>
+            <div id="badMarketingChart" style="height: 230px;" ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col m3 ">
+        <div class="card medium">
+          <div class="card-content">
+            <span class="card-title">Top 10 landing URLs</span>
+            <a class="modal-trigger" href="#kpiModal">
+            	<i id="launchKpiModal" class="action-icons medium card-title material-icons right">launch</i>
+            </a>
+            <i id="refreshKpiData" class="action-icons medium card-title material-icons right">loop</i>
+            <div id="kpiChart" style="height: 230px;" ></div>
+          </div>
+        </div>
+      </div>
+
+  	</div>
+
 	</div>
 
   <!-- Modals -->
@@ -52,6 +96,16 @@
     </div>
   </div>
 
+  <div id="userMapModal" class="modal">
+    <div class="modal-content">
+    	<div id="userMapsModalChart" style="height: 465px;"></div>
+    </div>
+    <div class="modal-footer">
+      <a id="close-user-map" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      <a id="refreshUserMapsModalChart" class=" modal-action waves-effect waves-green btn-flat">Refresh</a>
+    </div>
+  </div>
+
 	<script src="bower_components/jquery/dist/jquery.min.js" ></script>
 	<script src="bower_components/materialize/bin/materialize.js"></script>
 	<script src="bower_components/d3/d3.min.js"></script>
@@ -60,7 +114,7 @@
 	<!-- Google Maps dependencies -->
 	<script src="/javascripts/markerclusterer.js"></script>
 	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvoD0gMPtCDkNs6noZtMVW-Gwifb0GV84&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvoD0gMPtCDkNs6noZtMVW-Gwifb0GV84">
   </script>
   <!-- render charts dependency -->
 	<script src="/javascripts/fetchData.js"></script>
