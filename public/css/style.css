@@ -29,3 +29,24 @@
   /*font: 10px sans-serif;*/
   text-anchor: end;
 }
+
+.card .card-content {
+    padding: 10px;
+}
+
+i.action-icons {
+  cursor: pointer;
+}
+
+a {
+  color: #000000;
+}
+
+.modal {
+  max-height: 90%;
+  width: 90%;
+}
+
+.row {
+  margin-bottom: auto;
+}
