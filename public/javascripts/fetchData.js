@@ -39,7 +39,7 @@ nv.addGraph(function() {
         .showDistY(true)
         .showLabels(true)
         .useVoronoi(true)
-        .color(d3.scale.category20().range())
+        .color(d3.scale.category10().range())
         .duration(300)
         .clipEdge(true)
     ;
@@ -129,112 +129,37 @@ function initMap() {
 // ECR stacked bar chart
 var ecrChart;
 var ecrChartData = [
-    {
-        key: 'Engagement',
-        values: [
-            {
-                "label" : "Vehicle" ,
-                "value" : -1.8746444827653
-            } ,
-            {
-                "label" : "Condo" ,
-                "value" : -8.0961543492239
-            } ,
-            {
-                "label" : "Home Owner" ,
-                "value" : -0.57072943117674
-            } ,
-            {
-                "label" : "Renters" ,
-                "value" : -2.4174010336624
-            } ,
-            {
-                "label" : "Flood" ,
-                "value" : -0.72009071426284
-            } ,
-            {
-                "label" : "Umbrella" ,
-                "value" : -2.77154485523777
-            }
-        ]
-    },
-    {
-        key: 'Conversion',
-        values: [
-            {
-                "label" : "Vehicle" ,
-                "value" : -1.8746444827653
-            } ,
-            {
-                "label" : "Condo" ,
-                "value" : -8.0961543492239
-            } ,
-            {
-                "label" : "Home Owner" ,
-                "value" : -0.57072943117674
-            } ,
-            {
-                "label" : "Renters" ,
-                "value" : -2.4174010336624
-            } ,
-            {
-                "label" : "Flood" ,
-                "value" : -0.72009071426284
-            } ,
-            {
-                "label" : "Umbrella" ,
-                "value" : -2.77154485523777
-            }
-        ]
-    },
-    {
-        key: 'Retention',
-        values: [
-            {
-                "label" : "Vehicle" ,
-                "value" : -1.8746444827653
-            } ,
-            {
-                "label" : "Condo" ,
-                "value" : -8.0961543492239
-            } ,
-            {
-                "label" : "Home Owner" ,
-                "value" : -0.57072943117674
-            } ,
-            {
-                "label" : "Renters" ,
-                "value" : -2.4174010336624
-            } ,
-            {
-                "label" : "Flood" ,
-                "value" : -0.72009071426284
-            } ,
-            {
-                "label" : "Umbrella" ,
-                "value" : -2.77154485523777
-            }
-        ]
-    }
+	    {
+	        key: 'Engagement',
+	        values: []
+	    },
+	    {
+	        key: 'Conversion',
+	        values: []
+	    },
+	    {
+	        key: 'Retention',
+	        values: []
+	    }
 ];
 
 nv.addGraph(function() {
         ecrChart = nv.models.multiBarHorizontalChart()
             .x(function(d) { return d.label })
             .y(function(d) { return d.value })
-            // .yErr(function(d) { return [-Math.abs(d.value * Math.random() * 0.3), Math.abs(d.value * Math.random() * 0.3)] })
-            // .barColor(d3.scale.category20().range())
-            .duration(1050)
-            .margin({left: 100})
+            .duration(500)
+            .margin({left: 80})
             .stacked(true);
 
         ecrChart.yAxis.tickFormat(d3.format(',.2f'));
 
-        ecrChart.yAxis.axisLabel('Y Axis');
-        ecrChart.xAxis.axisLabel('X Axis').axisLabelDistance(20);
+        ecrChart.yAxis.axisLabel('Number of hits');
+        ecrChart.xAxis
+        // .axisLabel('X Axis')
+        .axisLabelDistance(20);
 
-        d3.select('#ecrRatio')
-        		.append('svg')
+        d3.select('#ecrChart')
+    		.append('svg')
             .datum(ecrChartData)
             .call(ecrChart);
 
@@ -247,6 +172,67 @@ nv.addGraph(function() {
         return ecrChart;
     });
 
+// ECR stacked bar chart
+var ecrModalChart;
+nv.addGraph(function() {
+        ecrModalChart = nv.models.multiBarHorizontalChart()
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value })
+            .duration(500)
+            .margin({left: 80})
+            .stacked(true);
+
+        ecrModalChart.yAxis.tickFormat(d3.format(',.2f'));
+
+        ecrModalChart.yAxis.axisLabel('Number of hits');
+        ecrModalChart.xAxis.axisLabelDistance(20);
+
+        d3.select('#ecrModalChart')
+        	.append('svg')
+            .datum(ecrChartData)
+            .call(ecrModalChart);
+
+        nv.utils.windowResize(ecrModalChart.update);
+
+        ecrModalChart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+        ecrModalChart.state.dispatch.on('change', function(state){
+            nv.log('state', JSON.stringify(state));
+        });
+        return ecrModalChart;
+    });
+
+var queryLatencyChart;
+var queryLatencyChartData = [{key: 'Query Latency',	values: []}];
+var count = 1;
+nv.addGraph(function() {
+	queryLatencyChart = nv.models.lineChart()
+	            .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+	            .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+	            .duration(500)  //how fast do you want the lines to transition?
+	            .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+	            .showYAxis(true)        //Show the y-axis
+	            .showXAxis(true)        //Show the x-axis
+	;
+
+	queryLatencyChart.xAxis     //Chart x-axis settings
+	  .axisLabel('Count')
+	  .tickFormat(d3.format(',.1f'));
+
+	queryLatencyChart.yAxis     //Chart y-axis settings
+	  .axisLabel('Time (milliseconds)')
+	  .tickFormat(d3.format('.02f'));
+
+	d3.select('#queryLatencyChart')
+		.append('svg')    //Select the <svg> element you want to render the chart in.   
+		.datum(queryLatencyChartData)         //Populate the <svg> element with chart data...
+		.call(queryLatencyChart);          //Finally, render the chart!
+
+	//Update the chart when window resizes.
+	nv.utils.windowResize(function() { queryLatencyChart.update() });
+	return queryLatencyChart;
+});
+
+
 //------------------------------------- jQuery Definitions -----------------------------------
 
 $(document).ready(function(){
@@ -257,17 +243,17 @@ $(document).ready(function(){
 // -----------------------------------Conversion Summary-------------------------------------
 	// Pull data and update conversion summary chart small
 	$("#refreshConversionSummaryData").click(function(){
-		updateConversionSummaryChart("SELECT * FROM test_purchase_summary limit 50;");
+		updateConversionSummaryChart("SELECT * FROM scatter_plot_table limit 100 ;");
 	});
 
 	// Pull data and update conversion summary modal chart
 	$("#refreshConversionSummaryModalChart").click(function(){
-		updateConversionSummaryModalChart("SELECT * FROM test_purchase_summary limit 50;");
+		updateConversionSummaryChart("SELECT * FROM scatter_plot_table limit 200;");
 	});
 
 	// update conversion summary modal chart
 	$("#launchConversionSummaryModal").click(function(){
-		updateConversionSummaryModalChart("SELECT * FROM test_purchase_summary limit 50;");
+		updateConversionSummaryChart("SELECT * FROM scatter_plot_table limit 200;");
 	});
 
 //----------------------------------------User Maps-------------------------------------------
@@ -291,65 +277,117 @@ $(document).ready(function(){
 		domID = 'userMapChart';
 		initMap();
 	});
+
+//-----------------------------------------------ECR----------------------------------------------
+	// Pull data and update ECR bar chart small
+	$("#refreshEcrData").click(function(){
+		updateEcrChart("select * from user_table;");
+	});
+
+	// Pull data and update ECR modal bar chart
+	$("#refreshEcrModalChart").click(function(){
+		updateEcrChart("select * from user_table;");
+	});
+
+	// update ECR modal bar chart
+	$("#launchEcrModal").click(function(){
+		updateEcrChart("select * from user_table;");
+	});
+
 }); // Document ready function closing bracket
 
 //----------------------------------------  CHART UPDATE FUCNTIONS ---------------------------------
-
+var startTime;
 var updateConversionSummaryChart = function(query){
-		console.log('sending query toto update conversionSummaryChart server: ' + query);
-		socket.emit('fetch-conversionSummaryChartData', query);
-
-		socket.on('fetched-conversionSummaryChartData',function(data){
-		conversionScatterChartData.forEach(function(elem){elem.values = [];}); // Remove old values from chart
-		data.forEach(function(row){
-			var index = conversionScatterChartData.findIndex(function(elem){
-				if(elem.key === row.insurance){
-				return true;
-				}
-			})
-			conversionScatterChartData[index].values.push({
-				x: row.time_spent,
-				y: row.visits_count,
-				size: row.age,
-				shape: shapes[index]
-			});
-		});
-		 conversionScatterChart.update();
-	});
+	startTime = Date.now();
+	// console.log('Querying cassandra with: ' + query);
+	socket.emit('fetch-conversionSummaryChartData', query);
 };
 
-var updateConversionSummaryModalChart = function(query){
-		console.log('sending query to server to update conversionSummaryModalChart: ' + query);
-		socket.emit('fetch-conversionSummaryChartData', query);
+socket.on('fetched-conversionSummaryChartData',function(data){
+	conversionScatterChartData.forEach(function(elem){elem.values = [];}); // Remove old values from chart
 
-		socket.on('fetched-conversionSummaryChartData',function(data){
-		conversionScatterChartData.forEach(function(elem){elem.values = [];}); // Remove old values from chart
-		data.forEach(function(row){
-			var index = conversionScatterChartData.findIndex(function(elem){
-				if(elem.key === row.insurance){
-				return true;
-				}
-			})
-			conversionScatterChartData[index].values.push({
-				x: row.time_spent,
-				y: row.visits_count,
-				size: row.age,
-				shape: shapes[index]
-			});
-		});
-		 conversionScatterModalChart.update();
-	});
-};
+	conversionScatterChartData[0].values = data[0];
+	conversionScatterChartData[1].values = data[1];
+	conversionScatterChartData[2].values = data[2];
+	conversionScatterChartData[3].values = data[3];
+	conversionScatterChartData[4].values = data[4];
+	conversionScatterChart.update();
+	conversionScatterModalChart.update();
+	console.log(`Time taken to update conversionSummaryChart is ${Date.now()-startTime} milliseconds.`);
+	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-startTime)});
+	queryLatencyChart.update();
+});
+
+// var updateConversionSummaryModalChart = function(query){
+// 	var start = Date.now();
+// 	console.log('Querying cassandra with: ' + query);
+// 	socket.emit('fetch-conversionSummaryChartData', query);
+// };
+
+// socket.on('fetched-conversionSummaryChartData',function(data){
+// 	conversionScatterChartData.forEach(function(elem){elem.values = [];}); // Remove old values from chart
+	
+// 	conversionScatterChartData[0].values = data[0];
+// 	conversionScatterChartData[1].values = data[1];
+// 	conversionScatterChartData[2].values = data[2];
+// 	conversionScatterChartData[3].values = data[3];
+// 	conversionScatterChartData[4].values = data[4];
+// 	conversionScatterChart.update();
+//  	conversionScatterModalChart.update();
+//  	console.log(`Time taken to update conversionSummaryModalChart is ${Date.now()-start} milliseconds.`);
+//  	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-start)});
+// 	queryLatencyChart.update();
+// });
 
 var updateUserMaps = function(query){
-	console.log('sending query to server to update maps: ' + query);
-	socket.emit('fetch-latLong', query);
-
-	socket.on('fetched-latLongData',function(data){
-		locations = data.map(function(elem){
-			return { lat: Number(elem.latitude), lng: Number(elem.longitude)};
-		});
-
-		initMap();
-	});
+	startTime = Date.now();
+	console.log('Sending query to server to update maps: ' + query);
+	socket.emit('fetch-latLong', query);	
 };
+
+socket.on('fetched-latLongData',function(data){
+	locations = data.map(function(elem){
+		return { lat: Number(elem.latitude), lng: Number(elem.longitude)};
+	});
+
+	initMap();
+	console.log(`Time taken to update userMaps is ${Date.now()-startTime} milliseconds.`);
+	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-startTime)});
+	queryLatencyChart.update();
+});
+
+var updateEcrChart = function(query){
+	startTime = Date.now();
+	console.log('sending query to update ecrChart server: ' + query);
+	socket.emit('fetch-ecrChartData', query);
+};
+
+socket.on('fetched-ecrChartData',function(data){
+	ecrChartData[0].values = data[0];
+	ecrChartData[1].values = data[1];
+	ecrChartData[2].values = data[2];
+	ecrChart.update();
+	ecrModalChart.update();
+	console.log(`Time taken to update ecrChart is ${Date.now()-startTime} milliseconds.`);
+	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-startTime)});
+	queryLatencyChart.update();
+});
+
+
+// var updateEcrModalChart = function(query){
+// 	var start = Date.now();
+// 	console.log('sending query to update ecrModalChart server: ' + query);
+// 	socket.emit('fetch-ecrChartData', query);
+
+// 	socket.on('fetched-ecrChartData',function(data){
+// 		ecrChartData[0].values = data[0];
+// 		ecrChartData[1].values = data[1];
+// 		ecrChartData[2].values = data[2];
+// 		ecrModalChart.update();
+// 		console.log(`Time taken to update ecrModalChart is ${Date.now()-start} milliseconds.`);
+// 	});
+// 	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-start)});
+// 	queryLatencyChart.update();
+// };
+

@@ -16,12 +16,12 @@
       <div class="col m6 ">
         <div class="card small">
           <div class="card-content">
-            <span class="card-title">Conversion Summary by Insurance</span>
-            <a class="modal-trigger" href="#conversionSummaryModal">
-            	<i id="launchConversionSummaryModal" class="action-icons medium card-title material-icons right">launch</i>
+            <span class="card-title">Engagement, Conversion, Retention</span>
+            <a class="modal-trigger" href="#ecrModal">
+              <i id="launchEcrModal" class="action-icons medium card-title material-icons right">launch</i>
             </a>
-            <i id="refreshConversionSummaryData" class="action-icons medium card-title material-icons right">loop</i>
-            <div id="conversionSummaryChart" style="height: 250px;" ></div>
+            <i id="refreshEcrData" class="action-icons medium card-title material-icons right">loop</i>
+            <div id="ecrChart" style="height: 250px;" ></div>
           </div>
         </div>
       </div>
@@ -42,20 +42,20 @@
   	</div>
   	<!-- ************************ SECOND ROW ************************** -->
   	<div class="row">
-      <div class="col m5 ">
+      <div class="col m8 ">
         <div class="card medium">
           <div class="card-content">
-            <span class="card-title">Engagement, Conversion, Retention</span>
-            <a class="modal-trigger" href="#ecrModal">
-            	<i id="launchEcrModal" class="action-icons medium card-title material-icons right">launch</i>
+            <span class="card-title">1st Conversion</span>
+            <a class="modal-trigger" href="#conversionSummaryModal">
+              <i id="launchConversionSummaryModal" class="action-icons medium card-title material-icons right">launch</i>
             </a>
-            <i id="refreshEcrData" class="action-icons medium card-title material-icons right">loop</i>
-            <div id="ecrRatio" style="height: 330px;" ></div>
+            <i id="refreshConversionSummaryData" class="action-icons medium card-title material-icons right">loop</i>
+            <div id="conversionSummaryChart" style="height: 330px;" ></div>
           </div>
         </div>
       </div>
 
-      <div class="col m4 ">
+<!--       <div class="col m4 ">
         <div class="card medium">
           <div class="card-content">
             <span class="card-title">Bad Channels of Marketing</span>
@@ -66,17 +66,17 @@
             <div id="badMarketingChart" style="height: 230px;" ></div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="col m3 ">
+      <div class="col m4 ">
         <div class="card medium">
           <div class="card-content">
-            <span class="card-title">Top 10 landing URLs</span>
-            <a class="modal-trigger" href="#kpiModal">
+            <span class="card-title">Query Latency</span>
+           <!--  <a class="modal-trigger" href="#kpiModal">
             	<i id="launchKpiModal" class="action-icons medium card-title material-icons right">launch</i>
             </a>
-            <i id="refreshKpiData" class="action-icons medium card-title material-icons right">loop</i>
-            <div id="kpiChart" style="height: 230px;" ></div>
+            <i id="refreshKpiData" class="action-icons medium card-title material-icons right">loop</i> -->
+            <div id="queryLatencyChart" style="height: 330px;" ></div>
           </div>
         </div>
       </div>
@@ -103,6 +103,16 @@
     <div class="modal-footer">
       <a id="close-user-map" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
       <a id="refreshUserMapsModalChart" class=" modal-action waves-effect waves-green btn-flat">Refresh</a>
+    </div>
+  </div>
+
+  <div id="ecrModal" class="modal">
+    <div class="modal-content">
+    	<div id="ecrModalChart" style="height: 465px;"></div>
+    </div>
+    <div class="modal-footer">
+      <a id="closeEcrModalChart" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+      <a id="refreshEcrModalChart" class=" modal-action waves-effect waves-green btn-flat">Refresh</a>
     </div>
   </div>
 

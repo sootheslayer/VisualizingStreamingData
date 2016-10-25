@@ -46,3 +46,7 @@ a {
   max-height: 90%;
   width: 90%;
 }
+
+.row {
+  margin-bottom: auto;
+}
