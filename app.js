@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var server = require('http').Server(app); 
+var io = require('socket.io')(server); // attach socket.io to the server
 var kafka = require('kafka-node');
 var cassandra = require('cassandra-driver');
 
@@ -19,13 +19,13 @@ app.get('/historical', function (req, res) {
 });
 
 // Kafka Consumer Config
-var zkserver = 'din16000309:2181'; // Kafka Server Address
-var kafka_client_id = 'socket.io-kafka';
+var zkserver = 'localhost:2181'; // Kafka Server Address
+var kafka_client_id = 'reporting-layer';
 var kafkaClient = new kafka.Client(zkserver,kafka_client_id);
 var consumer = new kafka.Consumer(kafkaClient,[{ topic: 'bounceRate' },{ topic: 'averageTime' },{ topic: 'usersPerCategory' },{ topic: 'hitsByMarketingChannels' },{ topic: 'pagesByBounceRate' }],{autoCommit: true});
 
 //cassandra configurations
-var client = new cassandra.Client({contactPoints: ['DIN16000309'], keyspace: 'rajsarka'});
+var client = new cassandra.Client({contactPoints: ['localhost'], keyspace: 'rajsarka'});
 
 // Define action to take when a websocket connection is established
 io.on('connection', function (socket) {

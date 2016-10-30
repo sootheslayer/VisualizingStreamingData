@@ -319,27 +319,6 @@ socket.on('fetched-conversionSummaryChartData',function(data){
 	queryLatencyChart.update();
 });
 
-// var updateConversionSummaryModalChart = function(query){
-// 	var start = Date.now();
-// 	console.log('Querying cassandra with: ' + query);
-// 	socket.emit('fetch-conversionSummaryChartData', query);
-// };
-
-// socket.on('fetched-conversionSummaryChartData',function(data){
-// 	conversionScatterChartData.forEach(function(elem){elem.values = [];}); // Remove old values from chart
-	
-// 	conversionScatterChartData[0].values = data[0];
-// 	conversionScatterChartData[1].values = data[1];
-// 	conversionScatterChartData[2].values = data[2];
-// 	conversionScatterChartData[3].values = data[3];
-// 	conversionScatterChartData[4].values = data[4];
-// 	conversionScatterChart.update();
-//  	conversionScatterModalChart.update();
-//  	console.log(`Time taken to update conversionSummaryModalChart is ${Date.now()-start} milliseconds.`);
-//  	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-start)});
-// 	queryLatencyChart.update();
-// });
-
 var updateUserMaps = function(query){
 	startTime = Date.now();
 	console.log('Sending query to server to update maps: ' + query);
@@ -374,20 +353,4 @@ socket.on('fetched-ecrChartData',function(data){
 	queryLatencyChart.update();
 });
 
-
-// var updateEcrModalChart = function(query){
-// 	var start = Date.now();
-// 	console.log('sending query to update ecrModalChart server: ' + query);
-// 	socket.emit('fetch-ecrChartData', query);
-
-// 	socket.on('fetched-ecrChartData',function(data){
-// 		ecrChartData[0].values = data[0];
-// 		ecrChartData[1].values = data[1];
-// 		ecrChartData[2].values = data[2];
-// 		ecrModalChart.update();
-// 		console.log(`Time taken to update ecrModalChart is ${Date.now()-start} milliseconds.`);
-// 	});
-// 	queryLatencyChartData[0].values.push({x:count++,y:(Date.now()-start)});
-// 	queryLatencyChart.update();
-// };
 
