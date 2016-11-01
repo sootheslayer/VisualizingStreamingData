@@ -39,6 +39,15 @@ Data source in this PoC was web server logs. Web server logs were generated usin
 - [NVD3](http://nvd3.org/) - Charting library built on D3
 - [jQuery](https://jquery.com/) - library for manipulating html documents
 
+### The Dashboard
+The final dashboard looks like this.
+
+This one is for the real time data. The charts are updating at a interval of 1 sec.
+![Real Time Dashboard](https://github.com/hchowdhary/Portfolio/tree/gh-pages/images/clickstream-real-time.png)
+
+And this is how the dashboard for batch queries looks like.
+![Batch Dashboard](https://github.com/hchowdhary/Portfolio/tree/gh-pages/images/clickstream-historical.png)
+
 ## Node application setup
 
 `app.js` and `public/javascripts/main.js` are the heart of this application. Node application container configurations are defined in `app.js` and client (browser) side configurations and chart definitions are defined in `main.js`. Other two important files are `index.html` and `historical.html` which contains the definition of UI.
