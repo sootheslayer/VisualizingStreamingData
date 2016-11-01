@@ -43,10 +43,10 @@ Data source in this PoC was web server logs. Web server logs were generated usin
 The final dashboard looks like this.
 
 This one is for the real time data. The charts are updating at a interval of 1 sec.
-![Real Time Dashboard](https://github.com/hchowdhary/Portfolio/tree/gh-pages/images/clickstream-real-time.png)
+![Real Time Dashboard](https://github.com/hchowdhary/Portfolio/raw/gh-pages/images/clickstream-historical.png)
 
 And this is how the dashboard for batch queries looks like.
-![Batch Dashboard](https://github.com/hchowdhary/Portfolio/tree/gh-pages/images/clickstream-historical.png)
+![Batch Dashboard](https://github.com/hchowdhary/Portfolio/raw/gh-pages/images/clickstream-historical.png)
 
 ## Node application setup
 
